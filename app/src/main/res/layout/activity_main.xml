@@ -129,7 +129,8 @@
                 android:text="@string/serving"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/fault_b_text"

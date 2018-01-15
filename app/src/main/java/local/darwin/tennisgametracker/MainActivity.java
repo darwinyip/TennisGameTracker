@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     int scoreB = 0;
     int faultA = 0;
     int faultB = 0;
-    boolean serving = false;
+    boolean serving = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,14 +32,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addPointsPlayerA(View view) {
-
         scoreA = increaseScore(scoreA);
         displayScoreA();
+        resetFaults();
     }
 
     public void addPointsPlayerB(View view) {
         scoreB = increaseScore(scoreB);
         displayScoreB();
+        resetFaults();
     }
 
     private int increaseScore(int score) {
@@ -100,6 +101,16 @@ public class MainActivity extends AppCompatActivity {
         scoreB = 0;
         displayScoreA();
         displayScoreB();
+        resetFaults();
+    }
+
+    public void resetFaults() {
+        TextView faultTextA = findViewById(R.id.fault_a_text);
+        TextView faultTextB = findViewById(R.id.fault_b_text);
+        faultTextA.setVisibility(View.INVISIBLE);
+        faultTextB.setVisibility(View.INVISIBLE);
+        faultA = 0;
+        faultB = 0;
     }
 
     public void addFaultPlayerA(View view) {
