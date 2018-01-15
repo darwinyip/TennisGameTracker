@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Tennis Game Tracker</string>
+    <string name="points_button">+ Points</string>
+    <string name="fault_button">+ Fault</string>
+    <string name="player_a">Player A</string>
+    <string name="serving">Serving</string>
+    <string name="player_b">Player B</string>
+    <string name="reset">Reset</string>
+</resources>
