@@ -1,5 +1,7 @@
 package local.darwin.tennisgametracker;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -21,12 +23,13 @@ public class MainActivity extends AppCompatActivity {
 
     private int scoreA = 0;
     private int scoreB = 0;
-    private int faultA = 0;
-    private int faultB = 0;
+    private boolean faultA = false;
+    private boolean faultB = false;
     private int currentSet = 0;
-    private int[] setA = new int[3];
-    private int[] setB = new int[3];
+    private int[] setA = new int[]{0, 0, 0};
+    private int[] setB = new int[]{0, 0, 0};
     private boolean serving = true;
+
     private TextView servingTextA;
     private TextView servingTextB;
     private TextView scoreTextA;
@@ -39,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView setTextB1;
     private TextView setTextB2;
     private TextView setTextB3;
+    private AlertDialog.Builder builder;
 
 
     @Override
@@ -57,55 +61,50 @@ public class MainActivity extends AppCompatActivity {
         setTextB1 = findViewById(R.id.score_b1_text);
         setTextB2 = findViewById(R.id.score_b2_text);
         setTextB3 = findViewById(R.id.score_b3_text);
-
+        builder = new AlertDialog.Builder(this);
     }
 
     public void addPointsPlayerA(View view) {
         scoreA = increaseScore(scoreA);
-        displayScoreA();
-        resetFaults();
+        update();
     }
 
     public void addPointsPlayerB(View view) {
         scoreB = increaseScore(scoreB);
-        displayScoreB();
-        resetFaults();
-    }
-
-    public void reset(View view) {
-        scoreA = 0;
-        scoreB = 0;
-        displayScoreA();
-        displayScoreB();
-        resetFaults();
+        update();
     }
 
     public void addFaultPlayerA(View view) {
         if (serving) {
-            faultA += 1;
             faultTextA.setVisibility(View.VISIBLE);
-            faultTextA.setText(faultA + " Fault");
-            if (faultA >= 2) {
+            faultTextA.setText("Fault");
+            if (faultA) {
                 scoreB = increaseScore(scoreB);
-                displayScoreB();
-                faultA = 0;
+                displayScore(scoreTextB, scoreB);
                 faultTextA.setVisibility(View.INVISIBLE);
+                update();
             }
+            faultA = !faultA;
         }
     }
 
     public void addFaultPlayerB(View view) {
         if (!serving) {
-            faultB += 1;
             faultTextB.setVisibility(View.VISIBLE);
-            faultTextB.setText(faultB + " Fault");
-            if (faultB >= 2) {
+            faultTextB.setText("Fault");
+            if (faultB) {
                 scoreA = increaseScore(scoreA);
-                displayScoreA();
-                faultB = 0;
+                displayScore(scoreTextA, scoreA);
                 faultTextB.setVisibility(View.INVISIBLE);
+                update();
             }
+            faultB = !faultB;
         }
+    }
+
+    public void reset(View view) {
+        resetScores();
+        resetFaults();
     }
 
     private int increaseScore(int score) {
@@ -137,28 +136,50 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void displayScoreA() {
-        if (scoreA != 45) {
-            scoreTextA.setText(String.valueOf(scoreA));
-        } else {
-            scoreTextA.setText("Win!");
-            switchServing();
-        }
+    private void displayScore(TextView scoreText, int score) {
+        scoreText.setText(String.valueOf(score));
     }
 
-    private void displayScoreB() {
-        if (scoreB != 45) {
-            scoreTextB.setText(String.valueOf(scoreB));
-        } else {
-            scoreTextB.setText("Win!");
-            switchServing();
-        }
+    private void resetScores() {
+        scoreA = 0;
+        scoreB = 0;
+        displayScore(scoreTextA, scoreA);
+        displayScore(scoreTextB, scoreB);
     }
 
     private void resetFaults() {
+        faultA = false;
+        faultB = false;
         faultTextA.setVisibility(View.INVISIBLE);
         faultTextB.setVisibility(View.INVISIBLE);
-        faultA = 0;
-        faultB = 0;
+    }
+
+    private void update() {
+        displayScore(scoreTextA, scoreA);
+        displayScore(scoreTextB, scoreB);
+        resetFaults();
+        if (scoreA == 45) {
+            showDialog("Player A");
+            setA[currentSet] += 1;
+            setTextA1.setText(String.valueOf(setA[currentSet]));
+            resetScores();
+            switchServing();
+        } else if (scoreB == 45) {
+            showDialog("Player B");
+            setB[currentSet] += 1;
+            setTextB1.setText(String.valueOf(setB[currentSet]));
+            resetScores();
+            switchServing();
+        }
+    }
+
+    private void showDialog(String player) {
+        builder.setTitle("Game for " + player);
+        builder.setNeutralButton("Next Game", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        }).show();
     }
 }
