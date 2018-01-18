@@ -13,154 +13,233 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="24dp"
-            android:layout_marginRight="24dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:fontFamily="sans-serif-medium"
-                android:gravity="center"
-                android:hint="@string/player_a"
-                android:textColor="#616161"
-                android:textSize="14sp" />
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/player_a_score"
-                android:layout_width="match_parent"
+                android:id="@+id/score_a1_text"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                android:fontFamily="sans-serif-light"
-                android:gravity="center"
                 android:text="0"
-                android:textColor="#000000"
-                android:textSize="56sp" />
+                android:textSize="36sp" />
+
+            <View
+                android:layout_width="5dp"
+                android:layout_height="match_parent" />
 
             <TextView
-                android:id="@+id/serve_a_text"
-                android:layout_width="match_parent"
+                android:id="@+id/score_b1_text"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@android:color/black"
-                android:gravity="center"
-                android:text="@string/serving"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:textStyle="bold" />
+                android:text="0"
+                android:textSize="36sp" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_margin="8dp"
+                android:background="@android:color/white" />
 
             <TextView
-                android:id="@+id/fault_a_text"
-                android:layout_width="match_parent"
+                android:id="@+id/score_a2_text"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@android:color/darker_gray"
-                android:gravity="center"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:textStyle="bold"
-                android:visibility="invisible" />
+                android:text="0"
+                android:textSize="36sp" />
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:layout_marginBottom="8dp"
-                android:onClick="addPointsPlayerA"
-                android:text="@string/points_button"
-                android:textAllCaps="true" />
+            <View
+                android:layout_width="5dp"
+                android:layout_height="match_parent" />
 
-            <Button
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/score_b2_text"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:layout_marginBottom="8dp"
-                android:onClick="addFaultPlayerA"
-                android:text="@string/fault_button"
-                android:textAllCaps="true" />
+                android:text="0"
+                android:textSize="36sp" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_margin="8dp"
+                android:background="@android:color/white" />
+
+            <TextView
+                android:id="@+id/score_a3_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="36sp" />
+
+            <View
+                android:layout_width="5dp"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:id="@+id/score_b3_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="36sp" />
         </LinearLayout>
 
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@android:color/white" />
-
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="24dp"
-            android:layout_marginRight="24dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
 
-            <EditText
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:fontFamily="sans-serif-medium"
-                android:gravity="center"
-                android:hint="@string/player_b"
-                android:textColor="#616161"
-                android:textSize="14sp" />
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/player_b_score"
-                android:layout_width="match_parent"
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:gravity="center"
+                    android:hint="@string/player_a"
+                    android:textColor="#616161"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/player_a_score"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp"
+                    android:fontFamily="sans-serif-light"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="#000000"
+                    android:textSize="56sp" />
+
+                <TextView
+                    android:id="@+id/serve_a_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/black"
+                    android:gravity="center"
+                    android:text="@string/serving"
+                    android:textAllCaps="true"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/fault_a_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/darker_gray"
+                    android:gravity="center"
+                    android:textAllCaps="true"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    android:visibility="invisible" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:layout_marginBottom="8dp"
+                    android:onClick="addPointsPlayerA"
+                    android:text="@string/points_button"
+                    android:textAllCaps="true" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:layout_marginBottom="8dp"
+                    android:onClick="addFaultPlayerA"
+                    android:text="@string/fault_button"
+                    android:textAllCaps="true" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@android:color/white" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                android:fontFamily="sans-serif-light"
-                android:gravity="center"
-                android:text="0"
-                android:textColor="#000000"
-                android:textSize="56sp" />
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/serve_b_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/black"
-                android:gravity="center"
-                android:text="@string/serving"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:textStyle="bold"
-                android:visibility="invisible" />
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:gravity="center"
+                    android:hint="@string/player_b"
+                    android:textColor="#616161"
+                    android:textSize="14sp" />
 
-            <TextView
-                android:id="@+id/fault_b_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/darker_gray"
-                android:gravity="center"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:textStyle="bold"
-                android:visibility="invisible" />
+                <TextView
+                    android:id="@+id/player_b_score"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp"
+                    android:fontFamily="sans-serif-light"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="#000000"
+                    android:textSize="56sp" />
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:layout_marginBottom="8dp"
-                android:onClick="addPointsPlayerB"
-                android:text="@string/points_button"
-                android:textAllCaps="true" />
+                <TextView
+                    android:id="@+id/serve_b_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/black"
+                    android:gravity="center"
+                    android:text="@string/serving"
+                    android:textAllCaps="true"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    android:visibility="invisible" />
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:layout_marginBottom="8dp"
-                android:onClick="addFaultPlayerB"
-                android:text="@string/fault_button"
-                android:textAllCaps="true" />
+                <TextView
+                    android:id="@+id/fault_b_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/darker_gray"
+                    android:gravity="center"
+                    android:textAllCaps="true"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    android:visibility="invisible" />
 
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:layout_marginBottom="8dp"
+                    android:onClick="addPointsPlayerB"
+                    android:text="@string/points_button"
+                    android:textAllCaps="true" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:layout_marginBottom="8dp"
+                    android:onClick="addFaultPlayerB"
+                    android:text="@string/fault_button"
+                    android:textAllCaps="true" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 

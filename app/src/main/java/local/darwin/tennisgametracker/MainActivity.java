@@ -19,16 +19,45 @@ import android.widget.TextView;
  */
 public class MainActivity extends AppCompatActivity {
 
-    int scoreA = 0;
-    int scoreB = 0;
-    int faultA = 0;
-    int faultB = 0;
-    boolean serving = true;
+    private int scoreA = 0;
+    private int scoreB = 0;
+    private int faultA = 0;
+    private int faultB = 0;
+    private int currentSet = 0;
+    private int[] setA = new int[3];
+    private int[] setB = new int[3];
+    private boolean serving = true;
+    private TextView servingTextA;
+    private TextView servingTextB;
+    private TextView scoreTextA;
+    private TextView scoreTextB;
+    private TextView faultTextA;
+    private TextView faultTextB;
+    private TextView setTextA1;
+    private TextView setTextA2;
+    private TextView setTextA3;
+    private TextView setTextB1;
+    private TextView setTextB2;
+    private TextView setTextB3;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        servingTextA = findViewById(R.id.serve_a_text);
+        servingTextB = findViewById(R.id.serve_b_text);
+        scoreTextA = findViewById(R.id.player_a_score);
+        scoreTextB = findViewById(R.id.player_b_score);
+        faultTextA = findViewById(R.id.fault_a_text);
+        faultTextB = findViewById(R.id.fault_b_text);
+        setTextA1 = findViewById(R.id.score_a1_text);
+        setTextA2 = findViewById(R.id.score_a2_text);
+        setTextA3 = findViewById(R.id.score_a3_text);
+        setTextB1 = findViewById(R.id.score_b1_text);
+        setTextB2 = findViewById(R.id.score_b2_text);
+        setTextB3 = findViewById(R.id.score_b3_text);
+
     }
 
     public void addPointsPlayerA(View view) {
@@ -41,6 +70,42 @@ public class MainActivity extends AppCompatActivity {
         scoreB = increaseScore(scoreB);
         displayScoreB();
         resetFaults();
+    }
+
+    public void reset(View view) {
+        scoreA = 0;
+        scoreB = 0;
+        displayScoreA();
+        displayScoreB();
+        resetFaults();
+    }
+
+    public void addFaultPlayerA(View view) {
+        if (serving) {
+            faultA += 1;
+            faultTextA.setVisibility(View.VISIBLE);
+            faultTextA.setText(faultA + " Fault");
+            if (faultA >= 2) {
+                scoreB = increaseScore(scoreB);
+                displayScoreB();
+                faultA = 0;
+                faultTextA.setVisibility(View.INVISIBLE);
+            }
+        }
+    }
+
+    public void addFaultPlayerB(View view) {
+        if (!serving) {
+            faultB += 1;
+            faultTextB.setVisibility(View.VISIBLE);
+            faultTextB.setText(faultB + " Fault");
+            if (faultB >= 2) {
+                scoreA = increaseScore(scoreA);
+                displayScoreA();
+                faultB = 0;
+                faultTextB.setVisibility(View.INVISIBLE);
+            }
+        }
     }
 
     private int increaseScore(int score) {
@@ -64,20 +129,15 @@ public class MainActivity extends AppCompatActivity {
     private void switchServing() {
         serving = !serving;
         if (serving) {
-            TextView servingA = findViewById(R.id.serve_a_text);
-            servingA.setVisibility(View.VISIBLE);
-            TextView servingB = findViewById(R.id.serve_b_text);
-            servingB.setVisibility(View.INVISIBLE);
+            servingTextA.setVisibility(View.VISIBLE);
+            servingTextB.setVisibility(View.INVISIBLE);
         } else {
-            TextView servingA = findViewById(R.id.serve_a_text);
-            servingA.setVisibility(View.INVISIBLE);
-            TextView servingB = findViewById(R.id.serve_b_text);
-            servingB.setVisibility(View.VISIBLE);
+            servingTextA.setVisibility(View.INVISIBLE);
+            servingTextB.setVisibility(View.VISIBLE);
         }
     }
 
     private void displayScoreA() {
-        TextView scoreTextA = findViewById(R.id.player_a_score);
         if (scoreA != 45) {
             scoreTextA.setText(String.valueOf(scoreA));
         } else {
@@ -87,7 +147,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void displayScoreB() {
-        TextView scoreTextB = findViewById(R.id.player_b_score);
         if (scoreB != 45) {
             scoreTextB.setText(String.valueOf(scoreB));
         } else {
@@ -96,50 +155,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void reset(View view) {
-        scoreA = 0;
-        scoreB = 0;
-        displayScoreA();
-        displayScoreB();
-        resetFaults();
-    }
-
-    public void resetFaults() {
-        TextView faultTextA = findViewById(R.id.fault_a_text);
-        TextView faultTextB = findViewById(R.id.fault_b_text);
+    private void resetFaults() {
         faultTextA.setVisibility(View.INVISIBLE);
         faultTextB.setVisibility(View.INVISIBLE);
         faultA = 0;
         faultB = 0;
-    }
-
-    public void addFaultPlayerA(View view) {
-        TextView faultTextA = findViewById(R.id.fault_a_text);
-        if (serving) {
-            faultA += 1;
-            faultTextA.setVisibility(View.VISIBLE);
-            faultTextA.setText(faultA + " Fault");
-            if (faultA >= 2) {
-                scoreB = increaseScore(scoreB);
-                displayScoreB();
-                faultA = 0;
-                faultTextA.setVisibility(View.INVISIBLE);
-            }
-        }
-    }
-
-    public void addFaultPlayerB(View view) {
-        TextView faultTextB = findViewById(R.id.fault_b_text);
-        if (!serving) {
-            faultB += 1;
-            faultTextB.setVisibility(View.VISIBLE);
-            faultTextB.setText(faultB + " Fault");
-            if (faultB >= 2) {
-                scoreA = increaseScore(scoreA);
-                displayScoreA();
-                faultB = 0;
-                faultTextB.setVisibility(View.INVISIBLE);
-            }
-        }
     }
 }
