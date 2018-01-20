@@ -14,88 +14,77 @@ import android.widget.TextView;
  */
 public class MainActivity extends AppCompatActivity {
 
-    private int scoreA = 0;
-    private int scoreB = 0;
-    private boolean faultA = false;
-    private boolean faultB = false;
+    private int score[] = new int[]{0, 0};
+    private boolean[] fault = new boolean[]{false, false};
+    private int[][] set = new int[][]{{0, 0, 0}, {0, 0, 0}};
     private int currentSet = 0;
-    private int[] setA = new int[]{0, 0, 0};
-    private int[] setB = new int[]{0, 0, 0};
     private boolean serving = true;
-
-    private TextView[] setTextA = new TextView[3];
-    private TextView[] setTextB = new TextView[3];
-    private TextView servingTextA;
-    private TextView servingTextB;
-    private TextView scoreTextA;
-    private TextView scoreTextB;
-    private TextView faultTextA;
-    private TextView faultTextB;
-    private Button pointButtonA;
-    private Button pointButtonB;
-    private Button faultButtonA;
-    private Button faultButtonB;
+    private TextView[][] setText = new TextView[2][3];
+    private TextView[] servingText = new TextView[2];
+    private TextView[] scoreText = new TextView[2];
+    private TextView[] faultText = new TextView[2];
+    private Button pointButton[] = new Button[2];
+    private Button faultButton[] = new Button[2];
     private AlertDialog.Builder builder;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        servingTextA = findViewById(R.id.serve_a_text);
-        servingTextB = findViewById(R.id.serve_b_text);
-        scoreTextA = findViewById(R.id.player_a_score);
-        scoreTextB = findViewById(R.id.player_b_score);
-        faultTextA = findViewById(R.id.fault_a_text);
-        faultTextB = findViewById(R.id.fault_b_text);
-        setTextA[0] = findViewById(R.id.score_a1_text);
-        setTextA[1] = findViewById(R.id.score_a2_text);
-        setTextA[2] = findViewById(R.id.score_a3_text);
-        setTextB[0] = findViewById(R.id.score_b1_text);
-        setTextB[1] = findViewById(R.id.score_b2_text);
-        setTextB[2] = findViewById(R.id.score_b3_text);
-        pointButtonA = findViewById(R.id.player_a_point_button);
-        pointButtonB = findViewById(R.id.player_b_point_button);
-        faultButtonA = findViewById(R.id.player_a_fault_button);
-        faultButtonB = findViewById(R.id.player_b_fault_button);
+        servingText[Player.PLAYER_A] = findViewById(R.id.serve_a_text);
+        servingText[Player.PLAYER_B] = findViewById(R.id.serve_b_text);
+        scoreText[Player.PLAYER_A] = findViewById(R.id.player_a_score);
+        scoreText[Player.PLAYER_B] = findViewById(R.id.player_b_score);
+        faultText[Player.PLAYER_A] = findViewById(R.id.fault_a_text);
+        faultText[Player.PLAYER_B] = findViewById(R.id.fault_b_text);
+        setText[Player.PLAYER_A][0] = findViewById(R.id.score_a1_text);
+        setText[Player.PLAYER_A][1] = findViewById(R.id.score_a2_text);
+        setText[Player.PLAYER_A][2] = findViewById(R.id.score_a3_text);
+        setText[Player.PLAYER_B][0] = findViewById(R.id.score_b1_text);
+        setText[Player.PLAYER_B][1] = findViewById(R.id.score_b2_text);
+        setText[Player.PLAYER_B][2] = findViewById(R.id.score_b3_text);
+        pointButton[Player.PLAYER_A] = findViewById(R.id.player_a_point_button);
+        pointButton[Player.PLAYER_B] = findViewById(R.id.player_b_point_button);
+        faultButton[Player.PLAYER_A] = findViewById(R.id.player_a_fault_button);
+        faultButton[Player.PLAYER_B] = findViewById(R.id.player_b_fault_button);
 
         builder = new AlertDialog.Builder(this);
     }
 
     public void addPointsPlayerA(View view) {
-        scoreA = increaseScore(scoreA);
+        score[Player.PLAYER_A] = increaseScore(score[Player.PLAYER_A]);
         update();
     }
 
     public void addPointsPlayerB(View view) {
-        scoreB = increaseScore(scoreB);
+        score[Player.PLAYER_B] = increaseScore(score[Player.PLAYER_B]);
         update();
     }
 
     public void addFaultPlayerA(View view) {
         if (serving) {
-            if (faultA) {
-                scoreB = increaseScore(scoreB);
-                faultTextA.setVisibility(View.INVISIBLE);
+            if (fault[Player.PLAYER_A]) {
+                score[Player.PLAYER_B] = increaseScore(score[Player.PLAYER_B]);
+                faultText[Player.PLAYER_A].setVisibility(View.INVISIBLE);
                 update();
             } else {
-                faultTextA.setVisibility(View.VISIBLE);
-                faultTextA.setText("Fault");
-                faultA = true;
+                faultText[Player.PLAYER_A].setVisibility(View.VISIBLE);
+                faultText[Player.PLAYER_A].setText("Fault");
+                fault[Player.PLAYER_A] = true;
             }
         }
     }
 
     public void addFaultPlayerB(View view) {
         if (!serving) {
-            if (faultB) {
-                scoreA = increaseScore(scoreA);
-                faultTextB.setVisibility(View.INVISIBLE);
+            if (fault[Player.PLAYER_B]) {
+                score[Player.PLAYER_A] = increaseScore(score[Player.PLAYER_A]);
+                faultText[Player.PLAYER_B].setVisibility(View.INVISIBLE);
                 update();
             } else {
-                faultTextB.setVisibility(View.VISIBLE);
-                faultTextB.setText("Fault");
-                faultB = true;
+                faultText[Player.PLAYER_B].setVisibility(View.VISIBLE);
+                faultText[Player.PLAYER_B].setText("Fault");
+                fault[Player.PLAYER_B] = true;
             }
         }
     }
@@ -104,10 +93,10 @@ public class MainActivity extends AppCompatActivity {
         resetScores();
         resetFaults();
         resetSets();
-        pointButtonA.setEnabled(true);
-        pointButtonB.setEnabled(true);
-        faultButtonA.setEnabled(true);
-        faultButtonB.setEnabled(true);
+        pointButton[Player.PLAYER_A].setEnabled(true);
+        pointButton[Player.PLAYER_B].setEnabled(true);
+        faultButton[Player.PLAYER_A].setEnabled(true);
+        faultButton[Player.PLAYER_B].setEnabled(true);
     }
 
     private int increaseScore(int score) {
@@ -131,11 +120,11 @@ public class MainActivity extends AppCompatActivity {
     private void switchServing() {
         serving = !serving;
         if (serving) {
-            servingTextA.setVisibility(View.VISIBLE);
-            servingTextB.setVisibility(View.INVISIBLE);
+            servingText[Player.PLAYER_A].setVisibility(View.VISIBLE);
+            servingText[Player.PLAYER_B].setVisibility(View.INVISIBLE);
         } else {
-            servingTextA.setVisibility(View.INVISIBLE);
-            servingTextB.setVisibility(View.VISIBLE);
+            servingText[Player.PLAYER_A].setVisibility(View.INVISIBLE);
+            servingText[Player.PLAYER_B].setVisibility(View.VISIBLE);
         }
     }
 
@@ -143,57 +132,58 @@ public class MainActivity extends AppCompatActivity {
         scoreText.setText(String.valueOf(score));
     }
 
+    private void winGame(int player) {
+        set[player][currentSet] += 1;
+        setText[player][currentSet].setText(String.valueOf(set[player][currentSet]));
+        resetScores();
+        switchServing();
+    }
+
     private void resetScores() {
-        scoreA = 0;
-        scoreB = 0;
-        displayScore(scoreTextA, scoreA);
-        displayScore(scoreTextB, scoreB);
+        score[Player.PLAYER_A] = 0;
+        score[Player.PLAYER_B] = 0;
+        displayScore(scoreText[Player.PLAYER_A], score[Player.PLAYER_A]);
+        displayScore(scoreText[Player.PLAYER_B], score[Player.PLAYER_B]);
     }
 
     private void resetFaults() {
-        faultA = false;
-        faultB = false;
-        faultTextA.setVisibility(View.INVISIBLE);
-        faultTextB.setVisibility(View.INVISIBLE);
+        fault[Player.PLAYER_A] = false;
+        fault[Player.PLAYER_B] = false;
+        faultText[Player.PLAYER_A].setVisibility(View.INVISIBLE);
+        faultText[Player.PLAYER_B].setVisibility(View.INVISIBLE);
     }
 
     private void resetSets() {
         currentSet = 0;
-        setA = new int[]{0, 0, 0};
-        setB = new int[]{0, 0, 0};
+        set[Player.PLAYER_A] = new int[]{0, 0, 0};
+        set[Player.PLAYER_B] = new int[]{0, 0, 0};
         for (int i = 0; i < 3; i++) {
-            setTextA[i].setText(String.valueOf(0));
-            setTextB[i].setText(String.valueOf(0));
+            setText[Player.PLAYER_A][i].setText(String.valueOf(0));
+            setText[Player.PLAYER_B][i].setText(String.valueOf(0));
         }
     }
 
     private void update() {
-        displayScore(scoreTextA, scoreA);
-        displayScore(scoreTextB, scoreB);
+        displayScore(scoreText[Player.PLAYER_A], score[Player.PLAYER_A]);
+        displayScore(scoreText[Player.PLAYER_B], score[Player.PLAYER_B]);
         resetFaults();
-        if (scoreA == 45) {
+        if (score[Player.PLAYER_A] == 45) {
             showDialog("Game for Player A");
-            setA[currentSet] += 1;
-            setTextA[currentSet].setText(String.valueOf(setA[currentSet]));
-            resetScores();
-            switchServing();
-        } else if (scoreB == 45) {
+            winGame(Player.PLAYER_A);
+        } else if (score[Player.PLAYER_B] == 45) {
             showDialog("Game for Player B");
-            setB[currentSet] += 1;
-            setTextB[currentSet].setText(String.valueOf(setB[currentSet]));
-            resetScores();
-            switchServing();
+            winGame(Player.PLAYER_B);
         }
-        if (setA[currentSet] == 6 || setB[currentSet] == 6) {
+        if (set[Player.PLAYER_A][currentSet] == 6 || set[Player.PLAYER_B][currentSet] == 6) {
             currentSet += 1;
             resetFaults();
             resetScores();
         }
         if (currentSet >= 3) {
-            pointButtonA.setEnabled(false);
-            pointButtonB.setEnabled(false);
-            faultButtonA.setEnabled(false);
-            faultButtonB.setEnabled(false);
+            pointButton[Player.PLAYER_A].setEnabled(false);
+            pointButton[Player.PLAYER_B].setEnabled(false);
+            faultButton[Player.PLAYER_A].setEnabled(false);
+            faultButton[Player.PLAYER_B].setEnabled(false);
             showDialog("Game Over");
         }
     }
@@ -207,5 +197,10 @@ public class MainActivity extends AppCompatActivity {
 
             }
         }).show();
+    }
+
+    static class Player {
+        private static final int PLAYER_A = 0;
+        private static final int PLAYER_B = 1;
     }
 }
