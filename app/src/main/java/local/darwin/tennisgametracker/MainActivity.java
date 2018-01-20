@@ -74,27 +74,29 @@ public class MainActivity extends AppCompatActivity {
 
     public void addFaultPlayerA(View view) {
         if (serving) {
-            faultTextA.setVisibility(View.VISIBLE);
-            faultTextA.setText("Fault");
             if (faultA) {
                 scoreB = increaseScore(scoreB);
                 faultTextA.setVisibility(View.INVISIBLE);
                 update();
+            } else {
+                faultTextA.setVisibility(View.VISIBLE);
+                faultTextA.setText("Fault");
+                faultA = true;
             }
-            faultA = !faultA;
         }
     }
 
     public void addFaultPlayerB(View view) {
         if (!serving) {
-            faultTextB.setVisibility(View.VISIBLE);
-            faultTextB.setText("Fault");
             if (faultB) {
                 scoreA = increaseScore(scoreA);
                 faultTextB.setVisibility(View.INVISIBLE);
                 update();
+            } else {
+                faultTextB.setVisibility(View.VISIBLE);
+                faultTextB.setText("Fault");
+                faultB = true;
             }
-            faultB = !faultB;
         }
     }
 
@@ -196,6 +198,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // Use a queue to display stacking dialogs?
     private void showDialog(String title) {
         builder.setTitle(title);
         builder.setNeutralButton("Next Game", new DialogInterface.OnClickListener() {

@@ -110,6 +110,9 @@
                     android:fontFamily="sans-serif-medium"
                     android:gravity="center"
                     android:hint="@string/player_a"
+                    android:inputType="textPersonName"
+                    android:maxLength="20"
+                    android:maxLines="1"
                     android:textColor="#616161"
                     android:textSize="14sp" />
 
@@ -187,6 +190,9 @@
                     android:fontFamily="sans-serif-medium"
                     android:gravity="center"
                     android:hint="@string/player_b"
+                    android:inputType="textPersonName"
+                    android:maxLength="20"
+                    android:maxLines="1"
                     android:textColor="#616161"
                     android:textSize="14sp" />
 
