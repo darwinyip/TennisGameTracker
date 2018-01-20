@@ -5,19 +5,12 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 /*
     TODO:
-    Tennis layout:
-    - 2 sides
-    - Name
-    - Points - 1 button to increment 0, 15, 30, 40
     - Deuce
-    - Sets - 4-3 (future enhancement)
-    - Serving side indicator
-    - fault count - After 2 faults, switch serving side
-    - Reset
  */
 public class MainActivity extends AppCompatActivity {
 
@@ -30,18 +23,18 @@ public class MainActivity extends AppCompatActivity {
     private int[] setB = new int[]{0, 0, 0};
     private boolean serving = true;
 
+    private TextView[] setTextA = new TextView[3];
+    private TextView[] setTextB = new TextView[3];
     private TextView servingTextA;
     private TextView servingTextB;
     private TextView scoreTextA;
     private TextView scoreTextB;
     private TextView faultTextA;
     private TextView faultTextB;
-    private TextView setTextA1;
-    private TextView setTextA2;
-    private TextView setTextA3;
-    private TextView setTextB1;
-    private TextView setTextB2;
-    private TextView setTextB3;
+    private Button pointButtonA;
+    private Button pointButtonB;
+    private Button faultButtonA;
+    private Button faultButtonB;
     private AlertDialog.Builder builder;
 
 
@@ -55,12 +48,17 @@ public class MainActivity extends AppCompatActivity {
         scoreTextB = findViewById(R.id.player_b_score);
         faultTextA = findViewById(R.id.fault_a_text);
         faultTextB = findViewById(R.id.fault_b_text);
-        setTextA1 = findViewById(R.id.score_a1_text);
-        setTextA2 = findViewById(R.id.score_a2_text);
-        setTextA3 = findViewById(R.id.score_a3_text);
-        setTextB1 = findViewById(R.id.score_b1_text);
-        setTextB2 = findViewById(R.id.score_b2_text);
-        setTextB3 = findViewById(R.id.score_b3_text);
+        setTextA[0] = findViewById(R.id.score_a1_text);
+        setTextA[1] = findViewById(R.id.score_a2_text);
+        setTextA[2] = findViewById(R.id.score_a3_text);
+        setTextB[0] = findViewById(R.id.score_b1_text);
+        setTextB[1] = findViewById(R.id.score_b2_text);
+        setTextB[2] = findViewById(R.id.score_b3_text);
+        pointButtonA = findViewById(R.id.player_a_point_button);
+        pointButtonB = findViewById(R.id.player_b_point_button);
+        faultButtonA = findViewById(R.id.player_a_fault_button);
+        faultButtonB = findViewById(R.id.player_b_fault_button);
+
         builder = new AlertDialog.Builder(this);
     }
 
@@ -80,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
             faultTextA.setText("Fault");
             if (faultA) {
                 scoreB = increaseScore(scoreB);
-                displayScore(scoreTextB, scoreB);
                 faultTextA.setVisibility(View.INVISIBLE);
                 update();
             }
@@ -94,7 +91,6 @@ public class MainActivity extends AppCompatActivity {
             faultTextB.setText("Fault");
             if (faultB) {
                 scoreA = increaseScore(scoreA);
-                displayScore(scoreTextA, scoreA);
                 faultTextB.setVisibility(View.INVISIBLE);
                 update();
             }
@@ -105,6 +101,11 @@ public class MainActivity extends AppCompatActivity {
     public void reset(View view) {
         resetScores();
         resetFaults();
+        resetSets();
+        pointButtonA.setEnabled(true);
+        pointButtonB.setEnabled(true);
+        faultButtonA.setEnabled(true);
+        faultButtonB.setEnabled(true);
     }
 
     private int increaseScore(int score) {
@@ -154,27 +155,49 @@ public class MainActivity extends AppCompatActivity {
         faultTextB.setVisibility(View.INVISIBLE);
     }
 
+    private void resetSets() {
+        currentSet = 0;
+        setA = new int[]{0, 0, 0};
+        setB = new int[]{0, 0, 0};
+        for (int i = 0; i < 3; i++) {
+            setTextA[i].setText(String.valueOf(0));
+            setTextB[i].setText(String.valueOf(0));
+        }
+    }
+
     private void update() {
         displayScore(scoreTextA, scoreA);
         displayScore(scoreTextB, scoreB);
         resetFaults();
         if (scoreA == 45) {
-            showDialog("Player A");
+            showDialog("Game for Player A");
             setA[currentSet] += 1;
-            setTextA1.setText(String.valueOf(setA[currentSet]));
+            setTextA[currentSet].setText(String.valueOf(setA[currentSet]));
             resetScores();
             switchServing();
         } else if (scoreB == 45) {
-            showDialog("Player B");
+            showDialog("Game for Player B");
             setB[currentSet] += 1;
-            setTextB1.setText(String.valueOf(setB[currentSet]));
+            setTextB[currentSet].setText(String.valueOf(setB[currentSet]));
             resetScores();
             switchServing();
         }
+        if (setA[currentSet] == 6 || setB[currentSet] == 6) {
+            currentSet += 1;
+            resetFaults();
+            resetScores();
+        }
+        if (currentSet >= 3) {
+            pointButtonA.setEnabled(false);
+            pointButtonB.setEnabled(false);
+            faultButtonA.setEnabled(false);
+            faultButtonB.setEnabled(false);
+            showDialog("Game Over");
+        }
     }
 
-    private void showDialog(String player) {
-        builder.setTitle("Game for " + player);
+    private void showDialog(String title) {
+        builder.setTitle(title);
         builder.setNeutralButton("Next Game", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {

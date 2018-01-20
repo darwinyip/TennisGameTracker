@@ -147,6 +147,7 @@
                     android:visibility="invisible" />
 
                 <Button
+                    android:id="@+id/player_a_point_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="4dp"
@@ -156,6 +157,7 @@
                     android:textAllCaps="true" />
 
                 <Button
+                    android:id="@+id/player_a_fault_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="4dp"
@@ -223,6 +225,7 @@
                     android:visibility="invisible" />
 
                 <Button
+                    android:id="@+id/player_b_point_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="4dp"
@@ -232,6 +235,7 @@
                     android:textAllCaps="true" />
 
                 <Button
+                    android:id="@+id/player_b_fault_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="4dp"
